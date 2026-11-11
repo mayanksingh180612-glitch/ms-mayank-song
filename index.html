@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAYANK SONG - Music Player</title>
+
+<style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:Arial,sans-serif;
+}
+
+body{
+ background:#090914;
+ color:white;
+}
+
+header{
+ background:linear-gradient(90deg,#7000ff,#e000ff);
+ padding:22px;
+ text-align:center;
+ font-size:27px;
+ font-weight:bold;
+ letter-spacing:2px;
+}
+
+.hero{
+ padding:35px 20px;
+ text-align:center;
+ background:linear-gradient(135deg,#17002e,#171044,#071d38);
+}
+
+.hero h1{
+ font-size:38px;
+ margin-bottom:12px;
+}
+
+.hero p{
+ color:#ccc;
+}
+
+.search{
+ width:90%;
+ max-width:500px;
+ padding:15px;
+ margin-top:22px;
+ border:none;
+ border-radius:30px;
+ outline:none;
+ font-size:16px;
+}
+
+nav{
+ display:flex;
+ gap:12px;
+ overflow-x:auto;
+ padding:18px;
+}
+
+nav button{
+ background:#211b36;
+ color:white;
+ border:1px solid #6934bd;
+ padding:12px 22px;
+ border-radius:25px;
+ cursor:pointer;
+ white-space:nowrap;
+}
+
+nav button:hover{
+ background:#8b28ff;
+}
+
+h2{
+ margin:25px 20px;
+}
+
+.singers{
+ display:flex;
+ overflow-x:auto;
+ gap:15px;
+ padding:15px;
+}
+
+.singer{
+ min-width:125px;
+ padding:22px 10px;
+ background:#19172b;
+ border-radius:15px;
+ text-align:center;
+ cursor:pointer;
+ border:1px solid #29213e;
+}
+
+.singer:hover{
+ transform:translateY(-5px);
+ border-color:#b34aff;
+}
+
+.singer .icon{
+ font-size:40px;
+ margin-bottom:10px;
+}
+
+.songs{
+ padding:15px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+ gap:16px;
+}
+
+.song{
+ background:#19172b;
+ border-radius:15px;
+ padding:12px;
+ cursor:pointer;
+ transition:.3s;
+ border:1px solid #29213e;
+}
+
+.song:hover{
+ transform:translateY(-5px);
+ border-color:#a536ff;
+}
+
+.cover{
+ height:135px;
+ border-radius:10px;
+ background:linear-gradient(135deg,#7500ff,#ff00a8);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:48px;
+}
+
+.song h3{
+ margin-top:12px;
+ font-size:15px;
+}
+
+.song p{
+ color:#aaa;
+ font-size:12px;
+ margin-top:6px;
+}
+
+.playbtn{
+ margin-top:12px;
+ width:100%;
+ padding:10px;
+ background:#8b27ff;
+ color:white;
+ border:0;
+ border-radius:20px;
+ cursor:pointer;
+}
+
+.player{
+ position:fixed;
+ bottom:0;
+ left:0;
+ width:100%;
+ background:#171329;
+ padding:15px;
+ border-top:2px solid #8b27ff;
+ z-index:10;
+}
+
+.player-info{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+}
+
+#currentTitle{
+ font-size:14px;
+ font-weight:bold;
+}
+
+.controls{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:25px;
+ margin:12px;
+}
+
+.controls button{
+ background:none;
+ color:white;
+ border:none;
+ font-size:25px;
+ cursor:pointer;
+}
+
+#playPause{
+ background:#9b35ff;
+ width:45px;
+ height:45px;
+ border-radius:50%;
+}
+
+input[type=range]{
+ width:100%;
+ accent-color:#a52dff;
+ cursor:pointer;
+}
+
+.time{
+ display:flex;
+ justify-content:space-between;
+ color:#aaa;
+ font-size:11px;
+}
+
+main{
+ padding-bottom:155px;
+}
+
+footer{
+ text-align:center;
+ padding:25px;
+ color:#aaa;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>🎵 MAYANK SONG</header>
+
+<section class="hero">
+<h1>Feel The Music ❤️</h1>
+<p>All Your Favourite Singers In One Place</p>
+
+<input class="search"
+id="search"
+placeholder="🔍 Search Songs, Singers..."
+oninput="renderSongs()">
+</section>
+
+<nav>
+<button onclick="filterSongs('All')">All Songs</button>
+<button onclick="filterSongs('Kishore Kumar')">Old Songs</button>
+<button onclick="filterSongs('Sidhu Moose Wala')">Punjabi</button>
+<button onclick="filterSongs('Atif Aslam')">Romantic</button>
+<button onclick="filterSongs('Arijit Singh')">Bollywood</button>
+</nav>
+
+<main>
+
+<h2>⭐ Famous Singers</h2>
+
+<div class="singers">
+<div class="singer" onclick="filterSongs('Kishore Kumar')">
+<div class="icon">🎤</div>Kishore Kumar
+</div>
+
+<div class="singer" onclick="filterSongs('Sidhu Moose Wala')">
+<div class="icon">🎧</div>Sidhu Moose Wala
+</div>
+
+<div class="singer" onclick="filterSongs('Atif Aslam')">
+<div class="icon">🎵</div>Atif Aslam
+</div>
+
+<div class="singer" onclick="filterSongs('Arijit Singh')">
+<div class="icon">❤️</div>Arijit Singh
+</div>
+
+<div class="singer" onclick="filterSongs('Sonu Nigam')">
+<div class="icon">🎼</div>Sonu Nigam
+</div>
+
+<div class="singer" onclick="filterSongs('Udit Narayan')">
+<div class="icon">🎹</div>Udit Narayan
+</div>
+
+<div class="singer" onclick="filterSongs('Lata Mangeshkar')">
+<div class="icon">🌹</div>Lata Mangeshkar
+</div>
+</div>
+
+<h2>🔥 All Songs</h2>
+
+<div class="songs" id="songs"></div>
+
+</main>
+
+<div class="player">
+
+<div class="player-info">
+<div>
+<div id="currentTitle">Select Your Favourite Song 🎵</div>
+<small id="currentSinger">MAYANK SONG</small>
+</div>
+</div>
+
+<div class="controls">
+<button onclick="previousSong()">⏮</button>
+<button id="playPause" onclick="togglePlay()">▶</button>
+<button onclick="nextSong()">⏭</button>
+</div>
+
+<input type="range" id="progress" value="0" min="0" max="100">
+
+<div class="time">
+<span id="currentTime">0:00</span>
+<span id="duration">0:00</span>
+</div>
+
+<audio id="audio"></audio>
+
+</div>
+
+<footer>
+<p>© 2026 MAYANK SONG 🎵</p>
+<p>Made with ❤️ by Mayank</p>
+</footer>
+
+<script>
+
+const songsData = [
+
+{
+title:"Mera Mehboob Qayamat Hogi",
+singer:"Kishore Kumar",
+file:"songs/kishore-1.mp3"
+},
+
+{
+title:"Roop Tera Mastana",
+singer:"Kishore Kumar",
+file:"songs/kishore-2.mp3"
+},
+
+{
+title:"295",
+singer:"Sidhu Moose Wala",
+file:"songs/295.mp3"
+},
+
+{
+title:"So High",
+singer:"Sidhu Moose Wala",
+file:"songs/so-high.mp3"
+},
+
+{
+title:"Tera Hone Laga Hoon",
+singer:"Atif Aslam",
+file:"songs/atif-1.mp3"
+},
+
+{
+title:"Pehli Nazar Mein",
+singer:"Atif Aslam",
+file:"songs/atif-2.mp3"
+},
+
+{
+title:"Tum Hi Ho",
+singer:"Arijit Singh",
+file:"songs/arijit-1.mp3"
+},
+
+{
+title:"Channa Mereya",
+singer:"Arijit Singh",
+file:"songs/arijit-2.mp3"
+},
+
+{
+title:"Abhi Mujh Mein Kahin",
+singer:"Sonu Nigam",
+file:"songs/sonu-1.mp3"
+},
+
+{
+title:"Papa Kehte Hain",
+singer:"Udit Narayan",
+file:"songs/udit-1.mp3"
+},
+
+{
+title:"Lag Jaa Gale",
+singer:"Lata Mangeshkar",
+file:"songs/lata-1.mp3"
+}
+
+];
+
+let currentSongs = [...songsData];
+let currentIndex = -1;
+
+const audio = document.getElementById("audio");
+const playPause = document.getElementById("playPause");
+
+function renderSongs(){
+
+const query =
+document.getElementById("search").value.toLowerCase();
+
+const container =
+document.getElementById("songs");
+
+container.innerHTML="";
+
+currentSongs.forEach((song,index)=>{
+
+if(
+song.title.toLowerCase().includes(query) ||
+song.singer.toLowerCase().includes(query)
+){
+
+const card=document.createElement("div");
+card.className="song";
+
+card.innerHTML=`
+<div class="cover">🎵</div>
+<h3>${song.title}</h3>
+<p>${song.singer}</p>
+<button class="playbtn">▶ Play Song</button>
+`;
+
+card.querySelector("button").onclick=()=>{
+playSong(index);
+};
+
+container.appendChild(card);
+
+}
+
+});
+
+}
+
+function filterSongs(singer){
+
+document.getElementById("search").value="";
+
+if(singer==="All"){
+currentSongs=[...songsData];
+}else{
+currentSongs=songsData.filter(
+s=>s.singer===singer
+);
+}
+
+renderSongs();
+
+}
+
+function playSong(index){
+
+currentIndex=index;
+
+const song=currentSongs[currentIndex];
+
+audio.src=song.file;
+audio.play();
+
+document.getElementById("currentTitle").innerText=song.title;
+document.getElementById("currentSinger").innerText=song.singer;
+
+playPause.innerText="Ⅱ";
+
+}
+
+function togglePlay(){
+
+if(currentIndex===-1){
+playSong(0);
+return;
+}
+
+if(audio.paused){
+audio.play();
+playPause.innerText="Ⅱ";
+}else{
+audio.pause();
+playPause.innerText="▶";
+}
+
+}
+
+function nextSong(){
+
+if(currentIndex<currentSongs.length-
